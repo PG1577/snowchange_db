@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/circleci-python
+    docker:
+      - image: "circleci/python:3.6.4"
+    steps:
+      - checkout
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r requirements.txt
+      - run: python schemachange/cli.py -f demo/citibike -a nf90525.ap-south-1.aws -u preritgarg -r sysadmin -w compute_wh
+
+workflows:
+  build:
+    jobs:
+      - build
